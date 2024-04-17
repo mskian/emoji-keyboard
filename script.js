@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function() {
   fetchEmojis();
 
   // Pagination settings
-  const emojisPerPage = 8;
+  const emojisPerPage = 6;
   const pagesPerSet = 4;
 
   // Fetch emojis from server

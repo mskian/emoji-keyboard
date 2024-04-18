@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // Fetch emojis from server
   function fetchEmojis() {
-    fetch('emojis.json')
+    fetch('/api/emojis.json')
       .then(response => {
         if (!response.ok) {
           throw new Error('Failed to fetch emojis');

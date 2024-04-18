@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light only">
+    <meta name="theme-color" content="#c7ecee">
+    <link rel="shortcut icon" href="data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABqklEQVQ4jZ2Tv0scURDHP7P7SGWh14mkuXJZEH8cgqUWcklAsLBbCEEJSprkD7hD/4BUISHEkMBBiivs5LhCwRQBuWgQji2vT7NeYeF7GxwLd7nl4knMwMDMfL8z876P94TMLt+8D0U0EggQSsAjwMvga8ChJAqxqjTG3m53AQTg4tXHDRH9ABj+zf6oytbEu5d78nvzcyiivx7QXBwy46XOi5z1jbM+Be+nqVfP8yzuD3FM6rzIs9YE1hqGvDf15cVunmdx7w5eYJw1pcGptC9CD4gBUuef5Ujq/BhAlTLIeFYuyfmTZgeYv+2nPt1a371P+Hm1WUPYydKf0lnePwVmh3hnlcO1uc7yvgJUDtdG8oy98kduK2KjeHI0fzCQINSXOk/vlXBUOaihAwnGWd8V5r1uhe1VIK52V6JW2D4FqHZX5lphuwEE7ooyaN7gjLMmKSwYL+pMnV+MA/6+g8RYa2Lg2RBQbj4+rll7uymLy3coiuXb5PdQVf7rKYvojAB8Lf3YUJUHfSYR3XqeLO5JXvk0dhKqSqQQoCO+s5AIxCLa2Lxc6ALcAPwS26XFskWbAAAAAElFTkSuQmCC" />
+  
+    <title>Emoji Keyboard</title>
+    <meta name="description" content="Emoji Keyboard - Choose Categories and Copy the Emoji."/>
+
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css" integrity="sha512-HqxHUkJM0SYcbvxUw5P60SzdOTy/QVwA1JJrvaXJv4q7lmbDZCmZaqz01UPOaQveoxfYRv1tHozWGPMcuTBuvQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            color-scheme: light only;
+        }
+        html, body {
+            min-height: 100vh;
+            font-family: "Roboto Mono", monospace;
+            background-color: #fcf837;
+            padding-bottom: 20px;
+            position: relative; /* Added */
+        }
+
+        h1 {
+            font-size: 25px;
+            font-weight: 700;
+        }
+
+        .emoji-button {
+            cursor: pointer;
+            font-size: 1.5rem;
+            margin: 0.2rem;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            background-color: #f5f5f5;
+            border: 1px solid #ccc;
+        }
+        .emoji-button:hover {
+            background-color: #eaeaea;
+        }
+        .emoji-button:focus {
+            outline: none;
+        }
+
+        #notification {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #d8f5d9;
+            color: rgb(34, 4, 4);
+            text-align: center;
+            padding: 16px;
+            z-index: 9999;
+            border-radius: 5px;
+        }
+
+        #notification.show {
+            display: block;
+        }
+
+        .button {
+            font-family: "Roboto Mono", monospace;
+            font-weight: 700;
+        }
+        input {
+            font-family: "Roboto Mono", monospace;
+            font-weight: 700;
+        }
+        .notification-close {
+            position: absolute;
+            top: 8px;
+            right: 16px;
+            cursor: pointer;
+        }
+
+        .overlay { /* Added */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+            z-index: 9998; /* Ensure it's behind the notification */
+            display: none; /* Initially hidden */
+        }
+        .category-button {
+           font-size: 14px; /* Adjust font size */
+           padding: 6px 12px; /* Adjust padding */
+        }
+    </style>
+
+</head>
+<body>
+
+    <div class="overlay" id="overlay"></div> <!-- Added overlay -->
+
+    <section class="section">
+        <div class="container">
+            <h1 class="has-text-centered">Emoji Keyboard</h1>
+            <br>
+            <div class="columns is-centered">
+                <div class="column is-half">
+                    <div class="field has-addons">
+                        <div class="control is-expanded">
+                            <input id="emoji-input" class="input" type="text" placeholder="Select Emoji">
+                        </div>
+                        <div class="control">
+                            <button id="copy-button" class="button is-info" disabled>Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="buttons is-centered mt-3" id="category-buttons">
+                <!-- Category buttons will be dynamically added here -->
+            </div>
+            <div class="buttons is-centered mt-5" id="emoji-buttons">
+                <!-- Emoji buttons will be dynamically added here -->
+            </div>
+            <div class="buttons is-centered mt-3" id="nav-buttons" style="display: none;">
+                <button id="previous-button" class="button is-success is-rounded" disabled>Prev</button>
+                <button id="next-button" class="button is-danger is-rounded">Next</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Notification element -->
+    <div id="notification">Emoji copied</div>
+
+    <script>
+        let categoryEmojis = {}; // Object to store emojis by category
+        let displayedEmojis = []; // Array to store currently displayed emojis
+        let emojisPerPage = 15; // Number of emojis to display per page
+        let currentPage = 0; // Current page index
+        let currentCategory = null; // Current category
+
+        // Function to fetch emojis from the API
+        async function fetchEmojis() {
+            try {
+                const response = await fetch('/api/emojidata.json');
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error('Error fetching emojis:', error);
+                return [];
+            }
+        }
+
+        // Function to initialize category buttons
+        async function initCategoryButtons() {
+            const categoryButtonsContainer = document.getElementById('category-buttons');
+            const emojisData = await fetchEmojis();
+            const categories = new Set(emojisData.map(emoji => emoji.category));
+            if (categories.size === 0) {
+                // No categories available, hide the category buttons container
+                categoryButtonsContainer.style.display = 'none';
+                return;
+            }
+            // Categories available, create and append category buttons
+            categories.forEach(category => {
+                const button = document.createElement('button');
+                button.textContent = category;
+                button.classList.add('button', 'is-info', 'is-rounded', 'category-button');
+                button.addEventListener('click', () => {
+                    currentCategory = category;
+                    loadEmojisByCategory(currentCategory);
+                });
+                categoryButtonsContainer.appendChild(button);
+            });
+        }
+
+        // Function to load emojis by category
+        async function loadEmojisByCategory(category) {
+            currentPage = 0;
+            currentCategory = category;
+            displayedEmojis = categoryEmojis[category].slice(currentPage * emojisPerPage, (currentPage + 1) * emojisPerPage);
+            renderEmojiButtons();
+            updateButtonStates();
+            // Show navigation buttons
+            document.getElementById('nav-buttons').style.display = 'flex';
+        }
+
+        // Function to render emoji buttons
+        function renderEmojiButtons() {
+            const emojiButtonsContainer = document.getElementById('emoji-buttons');
+            emojiButtonsContainer.innerHTML = ''; // Clear previous buttons
+            displayedEmojis.forEach(emoji => {
+                const button = document.createElement('button');
+                button.textContent = emoji.emoji;
+                button.classList.add('button', 'is-rounded', 'emoji-button');
+                button.addEventListener('click', () => {
+                    // Insert selected emoji into input field
+                    const emojiInput = document.getElementById('emoji-input');
+                    emojiInput.value += emoji.emoji;
+                    // Enable copy button
+                    document.getElementById('copy-button').disabled = false;
+                });
+                emojiButtonsContainer.appendChild(button);
+            });
+        }
+
+        // Function to copy emoji to clipboard using Clipboard API
+        async function copyEmoji() {
+            const emojiInput = document.getElementById('emoji-input');
+            try {
+                await navigator.clipboard.writeText(emojiInput.value);
+                // Show notification
+                const notification = document.getElementById('notification');
+                notification.classList.add('show');
+                // Show overlay
+                document.getElementById('overlay').style.display = 'block';
+                // Hide notification and overlay after 2 seconds
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                    document.getElementById('overlay').style.display = 'none';
+                }, 1000);
+            } catch (error) {
+                console.error('Failed to copy:', error);
+            }
+        }
+
+        // Function to update button states (enable/disable "Previous" and "Next" buttons)
+        function updateButtonStates() {
+            const previousButton = document.getElementById('previous-button');
+            const nextButton = document.getElementById('next-button');
+            if (currentPage === 0) {
+                previousButton.disabled = true;
+            } else {
+                previousButton.disabled = false;
+            }
+            if ((currentPage + 1) * emojisPerPage >= categoryEmojis[currentCategory].length) {
+                nextButton.disabled = true;
+            } else {
+                nextButton.disabled = false;
+            }
+        }
+
+        // Call the function to initialize category buttons when the page loads
+        window.addEventListener('load', async () => {
+            const emojisData = await fetchEmojis();
+            const categories = new Set(emojisData.map(emoji => emoji.category));
+            categories.forEach(category => {
+                categoryEmojis[category] = emojisData.filter(emoji => emoji.category === category);
+            });
+            initCategoryButtons();
+        });
+
+        // Add event listener for copy button
+        document.getElementById('copy-button').addEventListener('click', copyEmoji);
+
+        // Add event listener for previous button
+        document.getElementById('previous-button').addEventListener('click', () => {
+            currentPage--;
+            displayedEmojis = categoryEmojis[currentCategory].slice(currentPage * emojisPerPage, (currentPage + 1) * emojisPerPage);
+            renderEmojiButtons();
+            updateButtonStates();
+        });
+
+        // Add event listener for next button
+        document.getElementById('next-button').addEventListener('click', () => {
+            currentPage++;
+            displayedEmojis = categoryEmojis[currentCategory].slice(currentPage * emojisPerPage, (currentPage + 1) * emojisPerPage);
+            renderEmojiButtons();
+            updateButtonStates();
+        });
+
+        // Add event listener for input field to enable/disable copy button
+        document.getElementById('emoji-input').addEventListener('input', () => {
+            const copyButton = document.getElementById('copy-button');
+            copyButton.disabled = !document.getElementById('emoji-input').value;
+        });
+    </script>
+
+</body>
+</html>

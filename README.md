@@ -10,8 +10,8 @@ Gemoji - <https://github.com/github/gemoji>
 
 ## Usage
 
-- Home page - `/`
-- keyboard - `/keyboard/`
+- Home page (Showcase) - `/`
+- keyboard (Just Select and Copy) - `/keyboard/`
 
 ## LICENSE
 

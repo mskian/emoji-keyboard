@@ -1,18 +1,18 @@
-# Emoji Keyboard
+# Emoji Keyboard ☺️😎
 
 Emoji Keyboard - Search and Copy the Emoji.
 
 > Built using HTML, Bulma CSS and Javascript.
 
-## Emoji data
+## Emoji data 📦
 
 Gemoji - <https://github.com/github/gemoji>
 
-## Usage
+## Usage ☕
 
 - Home page (Showcase) - `/`
 - keyboard (Just Select and Copy) - `/keyboard/`
 
-## LICENSE
+## LICENSE ✅
 
 MIT

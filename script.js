@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const loadPreviousButton = document.createElement('button');
     loadPreviousButton.textContent = 'Prev';
-    loadPreviousButton.classList.add('button', 'is-danger', 'mr-2');
+    loadPreviousButton.classList.add('button', 'is-danger', 'mr-2', 'is-rounded');
     loadPreviousButton.addEventListener('click', function() {
       currentPage--;
       renderEmojis(emojisData);
@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const loadMoreButton = document.createElement('button');
     loadMoreButton.textContent = 'Next';
-    loadMoreButton.classList.add('button', 'is-primary');
+    loadMoreButton.classList.add('button', 'is-primary', 'is-rounded');
     loadMoreButton.addEventListener('click', function() {
       currentPage++;
       renderEmojis(emojisData);

@@ -135,9 +135,15 @@
     </section>
 
     <!-- Notification element -->
-    <div id="notification">Emoji copied</div>
+    <div id="notification">Emoji copied 📝</div>
 
     <script>
+
+        const canonicalLink = document.createElement('link');
+        canonicalLink.rel = 'canonical';
+        canonicalLink.href = window.location.href;
+        document.head.appendChild(canonicalLink);
+
         let categoryEmojis = {}; // Object to store emojis by category
         let displayedEmojis = []; // Array to store currently displayed emojis
         let emojisPerPage = 15; // Number of emojis to display per page

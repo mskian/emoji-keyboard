@@ -1,3 +1,8 @@
+const canonicalLink = document.createElement('link');
+canonicalLink.rel = 'canonical';
+canonicalLink.href = window.location.href;
+document.head.appendChild(canonicalLink);
+
 document.addEventListener("DOMContentLoaded", function() {
   const emojisContainer = document.getElementById("emojis-container");
   const buttonsContainer = document.getElementById("buttons-container");

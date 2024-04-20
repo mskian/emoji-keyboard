@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // Fetch emojis from server
   function fetchEmojis() {
-    fetch('/api/emojis.json')
+    fetch('/api/emojidata.json')
       .then(response => {
         if (!response.ok) {
           throw new Error('Failed to fetch emojis');
@@ -32,7 +32,16 @@ document.addEventListener("DOMContentLoaded", function() {
         if (!Array.isArray(data)) {
           throw new Error('Invalid data format');
         }
-        emojisData = data; // Store the data
+        // Map the fetched data to match the required pattern
+        emojisData = data.map(item => ({
+          emoji: item.emoji,
+          description: item.description,
+          category: item.category,
+          aliases: item.aliases,
+          tags: item.tags,
+          unicode_version: item.unicode_version,
+          ios_version: item.ios_version
+        }));
         renderEmojis(emojisData);
       })
       .catch(error => {
@@ -64,13 +73,13 @@ document.addEventListener("DOMContentLoaded", function() {
     emojiCard.innerHTML = `
       <div class="card">
         <div class="card-content has-text-centered">
-          <p class="emoji is-size-3">${emoji}</p>
+          <p class="emoji is-size-3">${emoji.emoji}</p>
         </div>
       </div>
     `;
     const cardContent = emojiCard.querySelector('.card-content');
     cardContent.addEventListener("click", function() {
-      copyEmojiToClipboard(emoji);
+      copyEmojiToClipboard(emoji.emoji);
     });
     return emojiCard;
   }  
